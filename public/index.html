@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Checagem do debate</title>
+<meta name="description" content="Linha do tempo de checagens de fatos do debate presidencial, com fontes.">
+<link rel="stylesheet" href="styles.css">
+<script src="config.js" defer></script>
+<script src="app.js" defer></script>
+</head>
+<body>
+<div id="ad-top" class="ad-slot" hidden></div>
+<div id="env-banner" class="env-banner" hidden>AMBIENTE DE TESTE — não é a página oficial</div>
+<header class="site-header">
+  <div class="wrap">
+    <p id="status" class="status status--loading" role="status">Carregando…</p>
+    <h1 id="event-title">Checagem do debate</h1>
+    <p id="event-sub" class="event-sub"></p>
+    <p id="mode-banner" class="mode-banner" hidden>Checagem feita após o debate, com base na gravação.</p>
+    <p class="ai-notice">
+      Checagem feita com auxílio de inteligência artificial e revisada por um operador.
+      Pode conter erros. Encontrou um? <a id="report-link" href="#">Avise-nos</a>.
+    </p>
+  </div>
+</header>
+
+<main class="wrap">
+  <section aria-labelledby="chart-title" class="chart-section">
+    <h2 id="chart-title">Vereditos por candidato</h2>
+    <div id="chart"></div>
+    <p class="chart-note">
+      Percentual sobre as afirmações checadas, não sobre tudo o que o candidato disse.
+      Afirmações opinativas ou sem dados suficientes não entram na conta.
+      <a href="#como-checamos">Como checamos</a>
+    </p>
+  </section>
+
+  <section aria-labelledby="timeline-title">
+    <h2 id="timeline-title">Linha do tempo</h2>
+    <p id="updated" class="updated" aria-live="polite"></p>
+    <ol id="timeline" class="timeline" aria-live="polite"></ol>
+    <p id="empty" class="empty" hidden>Nenhuma checagem publicada ainda. Esta página se atualiza sozinha.</p>
+    <button id="load-older" class="load-older" type="button" hidden>Carregar checagens anteriores</button>
+  </section>
+
+  <section id="como-checamos" aria-labelledby="how-title" class="how">
+    <h2 id="how-title">Como checamos</h2>
+    <ol>
+      <li>O áudio do debate é transcrito automaticamente. Os trechos citados aqui são dessa
+        <strong>transcrição automática</strong> e podem ter pequenas diferenças da fala.</li>
+      <li>Selecionamos só <strong>afirmações factuais verificáveis</strong>: números, datas, leis,
+        votações, gastos, indicadores e ações passadas. Opiniões, promessas, previsões e ataques
+        não são checados.</li>
+      <li>Cada afirmação é verificada com busca em fontes públicas, de preferência primárias
+        (IBGE, Ipea, Banco Central, Tesouro, Portal da Transparência, Diário Oficial, Câmara,
+        Senado, TSE) e checagens já publicadas por agências.</li>
+      <li>Só publicamos com <strong>pelo menos duas fontes independentes</strong>. Sem isso, a
+        afirmação não recebe título nenhum e não aparece aqui.</li>
+      <li>As mesmas regras valem para os dois candidatos. O nome de quem falou não é informado
+        na etapa de verificação.</li>
+      <li>Um operador pode bloquear, corrigir ou remover qualquer checagem. Remoções ficam
+        visíveis na linha do tempo.</li>
+    </ol>
+    <h3>Os três títulos</h3>
+    <dl class="legend">
+      <dt><span class="badge badge--VERDADEIRO"><span aria-hidden="true">✓</span> Verdadeiro</span></dt>
+      <dd>A afirmação confere com os dados.</dd>
+      <dt><span class="badge badge--NAO_E_BEM_ASSIM"><span aria-hidden="true">!</span> Não é bem assim</span></dt>
+      <dd>Tem base real, mas está exagerada, imprecisa, fora de contexto ou omite algo que muda o sentido. Sempre dizemos o quê.</dd>
+      <dt><span class="badge badge--FALSO"><span aria-hidden="true">✗</span> Falso</span></dt>
+      <dd>A afirmação contradiz os dados.</dd>
+    </dl>
+  </section>
+</main>
+
+<footer class="site-footer wrap">
+  <p>Sem vídeo nem áudio da transmissão: só texto.</p>
+</footer>
+
+<div id="ad-bottom" class="ad-slot ad-slot--bottom" hidden></div>
+<div id="ad-modal" class="ad-modal" hidden>
+  <div class="ad-modal__box" role="dialog" aria-modal="true" aria-labelledby="ad-modal-label">
+    <button type="button" class="ad-modal__close" aria-label="Fechar publicidade">Fechar ✕</button>
+    <p id="ad-modal-label" class="ad-label">Publicidade</p>
+    <div class="ad-modal__content"></div>
+  </div>
+</div>
+</body>
+</html>

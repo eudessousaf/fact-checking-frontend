@@ -36,3 +36,38 @@ npm test         # valida os exemplos e compara os schemas com o backend
 
 A comparação com o backend só roda se os dois repositórios estiverem clonados
 lado a lado (`.../fact-checking-backend` e `.../fact-checking-frontend`).
+
+## Ver a página no navegador
+
+```bash
+npm run serve        # http://127.0.0.1:8080  (Ctrl+C para parar)
+```
+
+O `scripts/serve.mjs` imita a CDN no que importa para a página (ETag e
+resposta 304, compressão, cache curto). Ele é só para teste: em produção
+quem serve é a CDN, nunca a máquina do operador.
+
+## Testes no navegador
+
+```bash
+npm run test:e2e
+```
+
+Abre um Chromium de verdade e confere: status, vereditos, gráfico (com o
+total ao lado de cada %), item removido, atualização sozinha, arquivo velho
+ignorado, falha de rede, texto malicioso no JSON, aviso de pós-debate, tela
+de celular sem rolagem lateral e as regras de publicidade.
+
+Usa o Google Chrome instalado na máquina. Para outro navegador:
+`CHROMIUM_PATH=/caminho/do/chrome npm run test:e2e`.
+
+## Arquivos publicados
+
+Tudo o que vai para a CDN está em `public/`:
+
+| arquivo | quem escreve | muda durante o debate? |
+|---|---|---|
+| `index.html`, `styles.css`, `app.js` | este repositório | não |
+| `config.js` | este repositório (editar e-mail de erro antes de publicar) | não |
+| `timeline.json` | o backend | sim, a cada checagem |
+| `ads.json`, `ads/*` | o backend, pelo painel | quando o operador mudar |

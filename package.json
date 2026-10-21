@@ -5,11 +5,14 @@
   "description": "Página pública estática da checagem do debate. Sem build: os arquivos de public/ vão direto para a CDN.",
   "type": "module",
   "scripts": {
-    "test": "node scripts/validate-contract.mjs"
+    "test": "node scripts/validate-contract.mjs",
+    "test:e2e": "node --test tests/e2e.mjs",
+    "serve": "node scripts/serve.mjs public 8080"
   },
   "devDependencies": {
     "ajv": "^8.17.1",
-    "ajv-formats": "^3.0.1"
+    "ajv-formats": "^3.0.1",
+    "playwright-core": "^1.56.1"
   },
   "engines": {
     "node": ">=18"

@@ -1,0 +1,102 @@
+/* Sem fontes externas: a pilha do sistema carrega na hora, mesmo no pico. */
+:root {
+  --bg: #f6f7f9; --card: #fff; --text: #1b1f24; --muted: #535b66; --line: #d6dbe1;
+  --link: #0b5cad;
+  /* Cor nunca é o único sinal: cada veredito tem ícone e texto. Mesmo assim os
+     três tons diferem em LUMINOSIDADE (escuro / claro / médio), que é o que
+     sobra para quem não distingue vermelho de verde. */
+  --true: #0d6b40; --true-bg: #e2f3ea;
+  --partial: #7a4f00; --partial-bg: #fff1cf; --partial-bar: #e9a619;
+  --false: #b42318; --false-bg: #fde7e4; --false-bar: #c9372c;
+  --true-bar: #0d6b40;
+  --env: #6b21a8;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f1216; --card: #171b21; --text: #e8ebef; --muted: #a6afba; --line: #2b323b;
+    --link: #7cb7ff;
+    --true: #6fd3a0; --true-bg: #12291e;
+    --partial: #f3c35b; --partial-bg: #2d2410;
+    --false: #ff8f84; --false-bg: #331714;
+  }
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--text);
+  font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+a { color: var(--link); }
+.wrap { max-width: 760px; margin: 0 auto; padding: 0 16px; }
+h1 { font-size: 1.5rem; line-height: 1.25; margin: 4px 0; }
+h2 { font-size: 1.15rem; margin: 28px 0 12px; }
+h3 { font-size: 1rem; margin: 20px 0 8px; }
+
+.env-banner { background: var(--env); color: #fff; text-align: center; font-weight: 700; padding: 6px 16px; }
+.site-header { background: var(--card); border-bottom: 1px solid var(--line); padding: 16px 0; }
+.event-sub { color: var(--muted); margin: 0; }
+.status { display: inline-block; font-weight: 700; font-size: .9rem; letter-spacing: .02em;
+  padding: 4px 10px; border-radius: 999px; margin: 0; border: 1px solid currentColor; }
+.status--em_andamento { color: var(--false); }
+.status--em_andamento::before { content: "● "; }
+.status--intervalo { color: var(--partial); }
+.status--encerrado, .status--aguardando, .status--loading { color: var(--muted); }
+.mode-banner { margin: 12px 0 0; padding: 8px 12px; border-left: 4px solid var(--partial-bar);
+  background: var(--partial-bg); font-weight: 600; }
+.ai-notice { margin: 12px 0 0; font-size: .9rem; color: var(--muted); }
+
+/* --- gráfico ------------------------------------------------------------- */
+.chart-row { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 12px; margin-bottom: 12px; }
+.chart-name { font-weight: 700; margin: 0 0 8px; }
+.bar { display: flex; height: 22px; border-radius: 4px; overflow: hidden; background: var(--line); }
+.bar span { display: block; height: 100%; }
+.bar .seg-VERDADEIRO { background: var(--true-bar); }
+.bar .seg-NAO_E_BEM_ASSIM { background: var(--partial-bar); }
+.bar .seg-FALSO { background: repeating-linear-gradient(135deg, var(--false-bar) 0 6px, #a52a20 6px 9px); }
+.chart-legend { list-style: none; padding: 0; margin: 8px 0 0; display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: .92rem; }
+.chart-insufficient { color: var(--muted); margin: 0; }
+.chart-note { font-size: .88rem; color: var(--muted); }
+
+/* --- linha do tempo ---------------------------------------------------------- */
+.updated { color: var(--muted); font-size: .85rem; margin: -6px 0 12px; }
+.timeline { list-style: none; padding: 0; margin: 0; }
+.item { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 14px; margin-bottom: 14px;
+  border-left-width: 6px; }
+.item--VERDADEIRO { border-left-color: var(--true); }
+.item--NAO_E_BEM_ASSIM { border-left-color: var(--partial-bar); }
+.item--FALSO { border-left-color: var(--false); }
+.item--removido { border-left-color: var(--muted); border-style: dashed; color: var(--muted); }
+.badge { display: inline-flex; align-items: center; gap: 6px; font-weight: 800; font-size: 1.05rem;
+  text-transform: uppercase; letter-spacing: .03em; padding: 3px 10px; border-radius: 6px; }
+.badge--VERDADEIRO { color: var(--true); background: var(--true-bg); }
+.badge--NAO_E_BEM_ASSIM { color: var(--partial); background: var(--partial-bg); }
+.badge--FALSO { color: var(--false); background: var(--false-bg); }
+.meta { color: var(--muted); font-size: .9rem; margin: 8px 0 0; }
+.meta strong { color: var(--text); }
+.quote { margin: 10px 0; padding: 8px 12px; border-left: 3px solid var(--line); font-style: italic; }
+.quote small { display: block; font-style: normal; color: var(--muted); font-size: .78rem; margin-top: 4px; }
+.claim { font-weight: 600; margin: 8px 0 4px; }
+.off { margin: 6px 0; }
+.indicators { list-style: none; padding: 0; margin: 8px 0; display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: .88rem; color: var(--muted); }
+.sources { margin: 6px 0 0; padding-left: 20px; font-size: .92rem; overflow-wrap: anywhere; }
+.edited { font-size: .82rem; color: var(--muted); margin: 6px 0 0; }
+.empty { color: var(--muted); }
+.load-older { font: inherit; padding: 10px 16px; border-radius: 6px; border: 1px solid var(--line);
+  background: var(--card); color: var(--text); cursor: pointer; width: 100%; }
+
+.how { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 4px 16px 12px; margin-top: 28px; }
+.how ol { padding-left: 20px; }
+.legend dt { margin-top: 10px; }
+.legend dd { margin: 4px 0 0; }
+.site-footer { color: var(--muted); font-size: .85rem; padding-top: 16px; padding-bottom: 24px; }
+
+/* --- publicidade -------------------------------------------------------------- */
+.ad-slot { text-align: center; padding: 6px 16px; background: var(--card); border-bottom: 1px solid var(--line); }
+/* A faixa de rodapé fica FIXA; o corpo ganha uma margem do tamanho dela
+   (definida pelo app.js) para nunca cobrir a linha do tempo. */
+.ad-slot--bottom { position: fixed; left: 0; right: 0; bottom: 0; border-top: 1px solid var(--line); border-bottom: 0; z-index: 10; }
+.ad-slot img, .ad-modal__content img { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+.ad-label { font-size: .72rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 0 0 4px; }
+.ad-modal { position: fixed; inset: 0; background: rgba(0,0,0,.55); display: flex; align-items: center; justify-content: center; z-index: 20; padding: 16px; }
+.ad-modal[hidden] { display: none; }
+.ad-modal__box { background: var(--card); border-radius: 10px; padding: 12px; max-width: 480px; width: 100%; position: relative; }
+.ad-modal__close { font: inherit; font-weight: 700; font-size: 1rem; min-height: 44px; padding: 8px 14px; margin: 0 0 8px auto;
+  display: block; border-radius: 6px; border: 2px solid var(--text); background: var(--card); color: var(--text); cursor: pointer; }
