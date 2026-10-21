@@ -1,0 +1,17 @@
+{
+  "name": "fact-checking-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Página pública estática da checagem do debate. Sem build: os arquivos de public/ vão direto para a CDN.",
+  "type": "module",
+  "scripts": {
+    "test": "node scripts/validate-contract.mjs"
+  },
+  "devDependencies": {
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
