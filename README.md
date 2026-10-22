@@ -71,3 +71,35 @@ Tudo o que vai para a CDN está em `public/`:
 | `config.js` | este repositório (editar e-mail de erro antes de publicar) | não |
 | `timeline.json` | o backend | sim, a cada checagem |
 | `ads.json`, `ads/*` | o backend, pelo painel | quando o operador mudar |
+
+## Publicar na DigitalOcean
+
+O envio é feito pelo backend (que tem as chaves no `.env` dele):
+
+```bash
+cd ../fact-checking-backend
+factcheck deploy-site ../fact-checking-frontend/public --com-exemplos   # 1ª vez
+factcheck deploy-site ../fact-checking-frontend/public                  # depois
+```
+
+Antes de publicar: troque o e-mail de "reportar erro" em `public/config.js`.
+
+No painel da DigitalOcean, na CDN do bucket, ponha o **TTL de 1 minuto** (o
+menor disponível). Os arquivos sobem com `Cache-Control: max-age=15` nos JSON;
+se a CDN respeitar o cabeçalho, a atualização chega mais rápido que 1 minuto.
+
+## Teste de carga
+
+Requer o [k6](https://k6.io) (`sudo apt install k6` não existe no Ubuntu
+padrão; siga https://grafana.com/docs/k6/latest/set-up/install-k6/).
+
+```bash
+k6 run -e URL=https://SEU-BUCKET.REGIAO.cdn.digitaloceanspaces.com/teste/ -e RATE=300 loadtest/k6-timeline.js
+```
+
+**Leia o resultado com honestidade:** 80 mil leitores consultando a cada ~25 s
+são ~3.200 pedidos/s. Um computador doméstico satura antes disso, então o
+teste mede a CDN numa taxa menor (comece com 300, suba até onde a sua máquina
+aguentar) e confere o que garante a escala: **zero erros**, tempo de resposta
+baixo, arquivo comprimido e a maioria das respostas em 304 (sem reenviar o
+conteúdo). O limite de capacidade da CDN da DigitalOcean não é publicado.

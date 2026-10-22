@@ -66,3 +66,10 @@ captura de tela, no celular (390 px) e no tema escuro.
 - Teste de carga contra a URL real (meta: 80 mil leitores ≈ 3.200
   pedidos/s, pela consulta a cada ~25 s).
 - Trocar o e-mail de "reportar erro" em `config.js`.
+
+## Teste de carga (22/10/2026)
+
+`loadtest/k6-timeline.js` pronto, aguardando a URL real. Limitação escrita no
+README: 80 mil leitores (~3.200 pedidos/s) não se reproduzem a partir de um
+computador doméstico; o teste mede a CDN numa taxa menor e confere erros,
+tempo, compressão e 304.
